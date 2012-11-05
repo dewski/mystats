@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    itunes-library (0.1.1)
+      plist
+    plist (3.1.0)
+    redis (3.0.2)
+    redis-namespace (1.2.1)
+      redis (~> 3.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  itunes-library
+  redis
+  redis-namespace
