@@ -16,8 +16,6 @@ itunes = ITunes::Library.load('/Users/dewski/Music/iTunes/iTunes Music Library.x
   Stats.gauge("itunes.#{type}.all", itunes.send(type).size)
 end
 
-Stats.gauge "itunes.plays.all", itunes.tracks.collect(&:play_count).inject(&:+)
-
-p Stats.to_hash[:gauges]
+Stats.gauge('itunes.plays.all', itunes.tracks.collect(&:play_count).inject(&:+))
 
 Graphite.publish Stats.to_hash[:gauges]
