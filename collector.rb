@@ -10,7 +10,7 @@ require_relative './graphite'
 REDIS = Redis.new(:host => '127.0.0.1', :port => ENV['GH_REDIS_PORT'].to_i)
 Stats.redis = REDIS
 
-# Gaugesafp://10.0.1.4/
+# Gauges
 hosts = {
   'laptop' => '/Volumes/iTunes/iTunes Music Library.xml',
   'server' => '/Users/admin/Music/iTunes/iTunes Music Library.xml'
@@ -27,5 +27,6 @@ hosts.each do |host, path|
   Stats.gauge("itunes.hosts.#{host}.plays.all", itunes.tracks.collect(&:play_count).inject(&:+))
 end
 
+Stats.gauge("reporter.total", REDIS.incr('reports:total'))
 
 Graphite.publish Stats.to_hash[:gauges]
