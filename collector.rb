@@ -10,12 +10,15 @@ require_relative './graphite'
 REDIS = Redis.new(:host => '127.0.0.1', :port => ENV['GH_REDIS_PORT'].to_i)
 Stats.redis = REDIS
 
-# Gauges
+# Gaugesafp://10.0.1.4/
 hosts = {
-  'laptop' => '/Users/dewski/Music/iTunes/iTunes Music Library.xml',
+  'laptop' => '/Volumes/iTunes/iTunes Music Library.xml',
   'server' => '/Users/admin/Music/iTunes/iTunes Music Library.xml'
 }
+
 hosts.each do |host, path|
+  next unless File.exists?(path)
+
   itunes = ITunes::Library.load(path)
   %w(music movies tv_shows podcasts books).each do |type|
     Stats.gauge("itunes.hosts.#{host}.#{type}.all", itunes.send(type).size)
